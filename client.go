@@ -2,8 +2,8 @@ package solrcluster
 
 import (
 	"fmt"
+	"io/ioutil"
 	"net/http"
-	"strings"
 	"time"
 )
 
@@ -17,7 +17,7 @@ type Client struct {
 }
 
 // NewClient
-func NewClient(host, *string) (*Client, error) {
+func NewClient(host *string) (*Client, error) {
 	c := Client{
 		HTTPClient: &http.Client{Timeout: 10 * time.Second},
 		// Default SolrCluster URL
