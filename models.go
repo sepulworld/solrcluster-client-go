@@ -1,7 +1,16 @@
 package solrcluster
 
-// SolrCollectionSpec defines the desired state of SolrCollection
-type SolrCollectionSpec struct {
+// SolrCollectionList
+type SolrCollectionList struct {
+	ResponseHeader struct {
+		Status int `json:"status"`
+		QTime  int `json:"QTime"`
+	} `json:"responseHeader"`
+	Collections []string `json:"collections"`
+}
+
+// SolrCollection defines the desired state of SolrCollection
+type SolrCollection struct {
 	// The name of the collection to perform the action on
 	Collection string `json:"collection"`
 
@@ -50,8 +59,8 @@ const (
 	CompositeIdRouter CollectionRouterName = "compositeId"
 )
 
-// SolrCollectionAliasSpec defines the desired state of SolrCollectionAlias
-type SolrCollectionAliasSpec struct {
+// SolrCollectionAlias defines the desired state of SolrCollectionAlias
+type SolrCollectionAlias struct {
 	// A reference to the SolrCloud to create alias on
 	SolrCloud string `json:"solrCloud"`
 
