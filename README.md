@@ -1,5 +1,9 @@
 # solrcluster-client-go
 
-### Collection Create/Update/Delete
+Go client for managing SolrClusters
 
-### Collection Alias Create/Update/Delete
+#### Supports
+
+###### Collection API
+
+* List

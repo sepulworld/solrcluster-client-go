@@ -1,51 +1,51 @@
 package solrcluster
 
 import (
-	"fmt"
-	"io/ioutil"
+	"bytes"
+	"encoding/json"
+	"log"
 	"net/http"
-	"time"
 )
 
-// HostURL - Default SolrCluster URL
-const HostURL string = "http://localhost"
-
-// Client
-type Client struct {
-	HostURL    string
-	HTTPClient *http.Client
+// HTTPClient interface
+type HTTPClient interface {
+	Do(req *http.Request) (*http.Response, error)
 }
 
-// NewClient
-func NewClient(host *string) (*Client, error) {
-	c := Client{
-		HTTPClient: &http.Client{Timeout: 10 * time.Second},
-		// Default SolrCluster URL
-		HostURL: HostURL,
-	}
+var (
+	Client HTTPClient
+)
 
-	if host != nil {
-		c.HostURL = *host
-	}
-
-	return &c, nil
+func init() {
+	Client = &http.Client{}
 }
 
-func (c *Client) doRequest(req *http.Request) ([]byte, error) {
-	res, err := c.HTTPClient.Do(req)
+// Post sends a post request to the URL with the body
+func Post(url string, body interface{}, headers http.Header) (*http.Response, error) {
+	jsonBytes, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
-
-	body, err := ioutil.ReadAll(res.Body)
+	request, err := http.NewRequest("POST", url, bytes.NewReader(jsonBytes))
 	if err != nil {
 		return nil, err
 	}
+	request.Header = headers
+	return Client.Do(request)
+}
 
-	if res.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("status: %d, body: %s", res.StatusCode, body)
+// Get request to the URL
+func Get(url string) (*http.Response, error) {
+	request, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		log.Fatal("Error reading request. ", err)
+		return nil, err
+	}
+	resp, err := Client.Do(request)
+	if err != nil {
+		log.Fatal("Error reading response. ", err)
+		return nil, err
 	}
 
-	return body, err
+	return resp, err
 }

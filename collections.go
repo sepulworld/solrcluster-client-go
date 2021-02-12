@@ -3,27 +3,29 @@ package solrcluster
 import (
 	"encoding/json"
 	"fmt"
-	"net/http"
+	"io/ioutil"
+	"log"
 )
 
-// GetCollections - Returns list of collections with responseheader data
-func (c *Client) GetCollections() ([]string, error) {
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/solr/admin/collections?action=LIST", c.HostURL), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	body, err := c.doRequest(req)
-	if err != nil {
-		return nil, err
-	}
-
+// GetCollections - Returns collection list and response header status and query time
+func GetCollections(host string) (SolrCollectionList, error) {
 	collections := SolrCollectionList{}
+
+	resp, err := Get(fmt.Sprintf("%s/solr/admin/collections?action=LIST", host))
+	if err != nil {
+		return SolrCollectionList{}, err
+	}
+
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal("Error reading body. ", err)
+	}
+
 	err = json.Unmarshal(body, &collections)
 	if err != nil {
-		return nil, err
+		return SolrCollectionList{}, err
 	}
 
-	return collections.Collections, nil
-
+	return collections, nil
 }
