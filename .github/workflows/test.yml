@@ -5,9 +5,9 @@ jobs:
     name: Test 
     strategy:
       matrix:
-        go: [1.13, 1.14, 1.15]
+        go: [1.14, 1.15]
     runs-on: ubuntu-latest
-    container: golang:${{ matrix.go }}-stretch
+    container: golang:${{ matrix.go }}-buster
     steps:
     - run: go get golang.org/x/tools/cmd/goimports
     - run: go get golang.org/x/lint/golint
