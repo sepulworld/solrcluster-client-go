@@ -18,7 +18,7 @@ import (
 	solrcluster "github.com/sepulworld/solrcluster-client-go"
 )
 
-// Get list of collections on SolrCluster
+// Get list of collections on a SolrCluster
 func main() {
 	host := "http://default-example-solrcloud.ing.local.domain"
 	resp, err := solrcluster.GetCollections(host)
