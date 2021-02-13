@@ -6,7 +6,7 @@ Go client for managing SolrClusters
 
 ### Collection API
 
-####List Collections
+#### List Collections
 
 ```go
 package main
