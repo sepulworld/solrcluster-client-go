@@ -12,6 +12,7 @@ type HTTPClient interface {
 	Do(req *http.Request) (*http.Response, error)
 }
 
+// Client interface
 var (
 	Client HTTPClient
 )

@@ -1,6 +1,6 @@
 package solrcluster
 
-// SolrCollectionList
+// SolrCollectionList defines collection list api response
 type SolrCollectionList struct {
 	ResponseHeader struct {
 		Status int `json:"status"`
@@ -52,11 +52,11 @@ type SolrCollection struct {
 type CollectionRouterName string
 
 const (
-	// The Implicit router
+	// ImplicitRouter route type
 	ImplicitRouter CollectionRouterName = "implicit"
 
-	// The CompositeId router
-	CompositeIdRouter CollectionRouterName = "compositeId"
+	// CompositeIDRouter route type
+	CompositeIDRouter CollectionRouterName = "compositeId"
 )
 
 // SolrCollectionAlias defines the desired state of SolrCollectionAlias
