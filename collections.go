@@ -19,7 +19,7 @@ func GetCollections(host string) (SolrCollectionList, error) {
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatal("Error reading body. ", err)
+		log.Fatal("Error reading response body. ", err)
 	}
 
 	err = json.Unmarshal(body, &collections)
