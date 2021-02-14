@@ -1,12 +1,33 @@
 package solrcluster
 
+// SolrAsyncResponse for async requests
+type SolrAsyncResponse struct {
+	ResponseHeader SolrResponseHeader `json:"responseHeader"`
+
+	RequestID string `json:"requestId"`
+
+	Status SolrAsyncStatus `json:"status"`
+}
+
+// SolrAsyncStatus state and message
+type SolrAsyncStatus struct {
+	// Possible states can be found here: https://github.com/apache/lucene-solr/blob/1d85cd783863f75cea133fb9c452302214165a4d/solr/solrj/src/java/org/apache/solr/client/solrj/response/RequestStatusState.java
+	AsyncState string `json:"state"`
+
+	Message string `json:"msg"`
+}
+
+// SolrResponseHeader http header response status and query time
+type SolrResponseHeader struct {
+	Status int `json:"status"`
+
+	QTime int `json:"QTime"`
+}
+
 // SolrCollectionList defines collection list api response
 type SolrCollectionList struct {
-	ResponseHeader struct {
-		Status int `json:"status"`
-		QTime  int `json:"QTime"`
-	} `json:"responseHeader"`
-	Collections []string `json:"collections"`
+	ResponseHeader SolrResponseHeader `json:"responseHeader"`
+	Collections    []string           `json:"collections"`
 }
 
 // SolrCollection defines the desired state of SolrCollection

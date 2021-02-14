@@ -2,6 +2,8 @@
 
 ![Go](https://github.com/sepulworld/solrcluster-client-go/workflows/Go/badge.svg?branch=main)
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/sepulworld/solrcluster-client-go.svg)](https://pkg.go.dev/github.com/sepulworld/solrcluster-client-go)
+
 Go client for managing SolrClusters
 
 ### Collection API
