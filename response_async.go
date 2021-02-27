@@ -11,7 +11,7 @@ import (
 func GetRequestStatus(host string, requestID string) (SolrAsyncResponse, error) {
 	asyncResponse := SolrAsyncResponse{}
 
-	resp, err := Get(fmt.Sprintf("%s/solr/admin/collections?action=REQUESTSTATUS&requestid=1000&wt=json", host))
+	resp, err := Get(fmt.Sprintf("%s/solr/admin/collections?action=REQUESTSTATUS&requestid=1000&wt=xml", host))
 	if err != nil {
 		return SolrAsyncResponse{}, err
 	}
