@@ -121,22 +121,11 @@ type SolrCoreProperty struct {
 
 // SolrCollectionCreateResponse response interface for collection API CREATE
 type SolrCollectionCreateResponse struct {
-	ResponseHeader SolrResponseHeader `json:"responseHeader"`
-	Success        SolrCoreSuccess    `json:"success,omitempty"`
-	Warning        string             `json:"warning,omitempty"`
-	Exception      SolrException      `json:"exception,omitempty"`
-	Error          SolrError          `json:"error,omitempty"`
-}
-
-// SolrCoreResponse response from Solr Core creation
-type SolrCoreResponse struct {
-	ResponseHeader SolrResponseHeader `json:"responseHeader"`
-	Core           string             `json:"core"`
-}
-
-// SolrCoreSuccess response from API call
-type SolrCoreSuccess struct {
-	SolrCoreResponses []SolrCoreResponse
+	ResponseHeader SolrResponseHeader     `json:"responseHeader"`
+	Success        map[string]interface{} `json:"success,omitempty"`
+	Warning        string                 `json:"warning,omitempty"`
+	Exception      SolrException          `json:"exception,omitempty"`
+	Error          SolrError              `json:"error,omitempty"`
 }
 
 // SolrException exception response from API
