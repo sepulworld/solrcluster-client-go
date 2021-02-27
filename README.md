@@ -30,3 +30,21 @@ func main() {
 	fmt.Println("Collections:", resp.Collections)
 }
 ```
+
+
+#### Create Collection
+
+```go
+        host := "http://default-example-solrcloud.ing.local.domain"
+        collection := solrcluster.SolrCollection{}
+        collection.Collection = "power-house-search-collection""
+        collection.CollectionConfigName = "_default"
+        collection.RouterName = "compositeId"
+        collection.NumShards = 2
+
+        createCollection, err := solrcluster.CreateCollection(host, collection)
+        if err != nil {
+                log.Fatal("Error creating solrcloud. ", err)
+        }
+        fmt.Println("Collection Created: ", createCollection)
+```
