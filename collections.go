@@ -41,10 +41,10 @@ func CreateCollection(host string, s SolrCollection) (SolrCollectionCreateRespon
 	queryParams.Set("wt", "json")
 
 	queryURL := host + "/solr/admin/collections?action=CREATE&"
-	if s.Collection == "" {
-		return r, errors.New("Error: Collection name required")
-	} else {
+	if s.Collection != "" {
 		queryParams.Add("name", s.Collection)
+	} else {
+		return r, errors.New("Error: Collection name required")
 	}
 
 	if s.CollectionConfigName != "" {
