@@ -19,7 +19,7 @@ func TestCollectionRename(t *testing.T) {
 	jsonData := `{
 		"responseHeader":{
 		  "status":0,
-		  "QTime":875}`
+		  "QTime":875}}`
 	r := ioutil.NopCloser(bytes.NewReader([]byte(jsonData)))
 	host := "http://localhost"
 	collection := "testCollection"
