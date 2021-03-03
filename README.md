@@ -48,3 +48,22 @@ func main() {
         }
         fmt.Println("Collection Created: ", createCollection)
 ```
+
+#### Delete Collection
+
+```go
+        host := "http://default-example-solrcloud.ing.local.domain"
+        collection := "testCollection"
+	resp, err := DeleteCollection(host, collection)
+        fmt.Println("Collection Deleted: ", collection)
+```
+
+#### Rename Collection
+
+```go
+        host := "http://default-example-solrcloud.ing.local.domain"
+	collection := "testCollection"
+	targetName := "newCollectionName"
+	resp, err := RenameCollection(host, collection, targetName)
+        fmt.Println("Collection Renamed, alias created: ", collection, "alias", targetName)
+```

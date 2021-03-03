@@ -119,8 +119,8 @@ type SolrCoreProperty struct {
 	Value string
 }
 
-// SolrCollectionCreateResponse response interface for collection API CREATE
-type SolrCollectionCreateResponse struct {
+// SolrCollectionAPIResponse response interface for collection API CREATE
+type SolrCollectionAPIResponse struct {
 	ResponseHeader SolrResponseHeader     `json:"responseHeader"`
 	Success        map[string]interface{} `json:"success,omitempty"`
 	Warning        string                 `json:"warning,omitempty"`

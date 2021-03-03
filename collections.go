@@ -35,8 +35,8 @@ func GetCollections(host string) (SolrCollectionList, error) {
 }
 
 // CreateCollection - Returns collection API request status
-func CreateCollection(host string, s SolrCollection) (SolrCollectionCreateResponse, error) {
-	r := SolrCollectionCreateResponse{}
+func CreateCollection(host string, s SolrCollection) (SolrCollectionAPIResponse, error) {
+	r := SolrCollectionAPIResponse{}
 	queryParams := url.Values{}
 	queryParams.Set("wt", "json")
 
@@ -66,7 +66,78 @@ func CreateCollection(host string, s SolrCollection) (SolrCollectionCreateRespon
 
 	resp, err := Get(queryURL + queryParams.Encode())
 	if err != nil {
-		return SolrCollectionCreateResponse{}, err
+		return SolrCollectionAPIResponse{}, err
+	}
+
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal("Error reading response body. ", err)
+	}
+
+	err = json.Unmarshal(body, &r)
+	if err != nil {
+		return r, err
+	}
+
+	return r, nil
+}
+
+// DeleteCollection delete a SolrCluster collection
+func DeleteCollection(host string, collection string) (SolrCollectionAPIResponse, error) {
+	r := SolrCollectionAPIResponse{}
+	queryParams := url.Values{}
+	queryParams.Set("wt", "json")
+
+	queryURL := host + "/solr/admin/collections?action=DELETE&"
+	if collection != "" {
+		queryParams.Add("name", collection)
+	} else {
+		return r, errors.New("Error: Collection name to delete required")
+	}
+
+	resp, err := Get(queryURL + queryParams.Encode())
+	if err != nil {
+		return SolrCollectionAPIResponse{}, err
+	}
+
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal("Error reading response body. ", err)
+	}
+
+	err = json.Unmarshal(body, &r)
+	if err != nil {
+		return r, err
+	}
+
+	return r, nil
+}
+
+// RenameCollection rename a SolrCluster collection
+// https://solr.apache.org/guide/8_7/collection-management.html#rename-command-parameters
+func RenameCollection(host string, existingName string, targetName string) (SolrCollectionAPIResponse, error) {
+	r := SolrCollectionAPIResponse{}
+	queryParams := url.Values{}
+	queryParams.Set("wt", "json")
+
+	queryURL := host + "/solr/admin/collections?action=RENAME&"
+	if existingName != "" {
+		queryParams.Add("name", existingName)
+	} else {
+		return r, errors.New("Error: Collection name to rename required required")
+	}
+
+	if targetName != "" {
+		queryParams.Add("name", targetName)
+	} else {
+		return r, errors.New("Error: Collection target name to rename to required required")
+	}
+
+	resp, err := Get(queryURL + queryParams.Encode())
+	if err != nil {
+		return SolrCollectionAPIResponse{}, err
 	}
 
 	defer resp.Body.Close()
