@@ -10,8 +10,7 @@ import (
 	"github.com/sepulworld/solrcluster-client-go/utils/mocks"
 )
 
-func prepMock() {
-	// Mockdata for example test
+func prepmock() {
 	json := `{
 		"responseHeader":{
 		  "status":0,
@@ -27,16 +26,17 @@ func prepMock() {
 			Body:       r,
 		}, nil
 	}
-
 }
-func ExampleGetCollections() {
-	prepMock()
 
+func ExampleGetCollections() {
+	prepmock()
 	host := "http://default-example-solrcloud.ing.local.domain"
 	resp, err := GetCollections(host)
 	if err != nil {
 		log.Fatal("Error connecting to solrcloud. ", err)
 	}
 	fmt.Println(resp.Collections)
-	// Output: [collection1 example1 example2]
+
+	// Output:
+	// [collection1 example1 example2]
 }
