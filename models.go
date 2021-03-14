@@ -53,10 +53,10 @@ type SolrCollection struct {
 	NumShards int
 
 	// The replication factor to be used
-	ReplicationFactor int64
+	ReplicationFactor int
 
 	// Max shards per node
-	MaxShardsPerNode int64
+	MaxShardsPerNode int
 
 	// A comma separated list of shard names, e.g., shard-x,shard-y,shard-z. This is a required parameter when the router.name is implicit
 	Shards string
@@ -65,13 +65,13 @@ type SolrCollection struct {
 	AutoAddReplicas bool
 
 	// The number of NRT (Near-Real-Time) replicas to create for this collection. This type of replica maintains a transaction log and updates its index locally. If you want all of your replicas to be of this type, you can simply use replicationFactor instead.
-	NRTReplicas int64
+	NRTReplicas int
 
 	// The number of TLOG replicas to create for this collection. This type of replica maintains a transaction log but only updates its index via replication from a leader. See the section Types of Replicas for more information about replica types.
-	TlogReplicas int64
+	TlogReplicas int
 
 	// The number of PULL replicas to create for this collection. This type of replica does not maintain a transaction log and only updates its index via replication from a leader. This type is not eligible to become a leader and should not be the only type of replicas in the collection. See the section Types of Replicas for more information about replica types.
-	PullReplicas int64
+	PullReplicas int
 
 	/*
 			Allows defining the nodes to spread the new collection across.
@@ -117,6 +117,12 @@ type SolrCollection struct {
 type SolrCoreProperty struct {
 	Name  string
 	Value string
+}
+
+// CollectionAttribute key-value pairs of attribute name and attribute values for collection
+type CollectionAttribute struct {
+	Attribute string
+	Value     string
 }
 
 // SolrCollectionAPIResponse response interface for collection API CREATE

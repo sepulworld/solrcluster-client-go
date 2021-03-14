@@ -48,7 +48,7 @@ func TestCollectionCreate(t *testing.T) {
 		}, nil
 	}
 
-	resp, err := CreateCollection(host, collection)
+	resp, _, err := CreateCollection(host, collection)
 	if err != nil {
 		fmt.Println(err)
 	}
